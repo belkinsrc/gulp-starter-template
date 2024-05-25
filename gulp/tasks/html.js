@@ -1,7 +1,10 @@
 import browserSync from 'browser-sync';
 import fileInclude from 'gulp-file-include';
-import gulpIf from 'gulp-if';
+// import ejs from 'gulp-ejs';
 import htmlmin from 'gulp-htmlmin';
+// import rename from 'gulp-rename';
+import replace from 'gulp-replace';
+import gulpIf from 'gulp-if';
 
 const fileIncludeOptions = {
   prefix: '@',
@@ -11,6 +14,7 @@ const fileIncludeOptions = {
 const html = () => {
   return app.gulp.src(app.paths.src.html)
     .pipe(fileInclude(fileIncludeOptions))
+    .pipe(replace(/@image\//g, 'image/'))
     .pipe(gulpIf(app.isProd, htmlmin({ collapseWhitespace: true })))
     .pipe(app.gulp.dest(app.paths.build.html))
     .pipe(browserSync.stream());
