@@ -1,7 +1,5 @@
 import gulp from 'gulp';
 import browserSync from 'browser-sync';
-
-import { paths } from './gulp/config/paths.js';
 import { clean } from './gulp/tasks/clean.js';
 import { html } from './gulp/tasks/html.js';
 import { scripts } from './gulp/tasks/scripts.js';
@@ -11,9 +9,13 @@ import { webpImages } from './gulp/tasks/webp.js';
 import { svg } from './gulp/tasks/svg.js';
 import { fonts } from './gulp/tasks/fonts.js';
 
+import { paths } from './gulp/config/paths.js';
+import { plugins } from './gulp/config/plugins.js';
+
 global.app = {
   gulp,
   paths,
+  plugins,
   isProd: process.argv.includes('--build'),
 };
 
@@ -36,7 +38,7 @@ const watcher = () => {
 
 const dev = gulp.series(
   clean,
-  gulp.parallel(html, scripts, styles, images, webp, fonts),
+  gulp.parallel(html, scripts, styles, images, webpImages, svg, fonts),
   watcher
 );
 
