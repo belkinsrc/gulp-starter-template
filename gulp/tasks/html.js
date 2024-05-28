@@ -1,4 +1,6 @@
 import browserSync from 'browser-sync';
+import plumber from 'gulp-plumber';
+import notify from 'gulp-notify';
 import fileInclude from 'gulp-file-include';
 // import ejs from 'gulp-ejs';
 import htmlmin from 'gulp-htmlmin';
@@ -12,8 +14,16 @@ const fileIncludeOptions = {
   basepath: '@file',
 };
 
+const plumberOptions = {
+  errorHandler: notify.onError({
+    title: 'HTML',
+    message: 'Error: <%= error.message %>',
+  }),
+};
+
 const html = () => {
   return app.gulp.src(app.paths.src.html)
+    .pipe(plumber(plumberOptions))
     .pipe(fileInclude(fileIncludeOptions))
     .pipe(replace(/@image\//g, 'images/'))
     .pipe(gulpIf(app.isProd, htmlmin({ collapseWhitespace: true })))

@@ -1,11 +1,12 @@
+import * as dartSass from 'sass';
+import gulpSass from 'gulp-sass';
 import browserSync from 'browser-sync';
 import plumber from 'gulp-plumber';
 import notify from 'gulp-notify';
 import gulpIf from 'gulp-if';
+import sourcemaps from 'gulp-sourcemaps';
 import autoprefixer from 'gulp-autoprefixer';
 import cleanCSS from 'gulp-clean-css';
-import * as dartSass from 'sass';
-import gulpSass from 'gulp-sass';
 
 const sass = gulpSass(dartSass);
 
@@ -18,8 +19,9 @@ const plumberOptions = {
 
 const styles = () => {
   return app.gulp
-    .src(app.paths.src.styles, { sourcemaps: !app.isProd })
+    .src(app.paths.src.styles)
     .pipe(plumber(plumberOptions))
+    .pipe(gulpIf(!app.isProd, sourcemaps.init()))
     .pipe(sass())
     .pipe(autoprefixer({
       cascade: false,
@@ -29,6 +31,7 @@ const styles = () => {
     .pipe(gulpIf(app.isProd, cleanCSS({
       level: 2
     })))
+    .pipe(gulpIf(!app.isProd, sourcemaps.write('.')))
     .pipe(app.gulp.dest(app.paths.build.styles))
     .pipe(browserSync.stream());
 };
