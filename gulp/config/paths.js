@@ -10,11 +10,11 @@ export const paths = {
     html: buildFolder,
     styles: `${buildFolder}/css`,
     scripts: `${buildFolder}/js`,
-    images: `${buildFolder}/img`,
+    images: `${buildFolder}/images`,
     fonts: `${buildFolder}/fonts`,
   },
   src: {
-    html: `${srcFolder}/*.html`,
+    html: `${srcFolder}/views/*.html`,
     styles: `${srcFolder}/styles/*.scss`,
     scripts: `${srcFolder}/scripts/*.js`,
     images: `${srcFolder}/**/*.{jpg,jpeg,png,svg}`,

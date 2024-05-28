@@ -14,7 +14,7 @@ const fileIncludeOptions = {
 const html = () => {
   return app.gulp.src(app.paths.src.html)
     .pipe(fileInclude(fileIncludeOptions))
-    .pipe(replace(/@image\//g, 'image/'))
+    .pipe(replace(/@image\//g, 'images/'))
     .pipe(gulpIf(app.isProd, htmlmin({ collapseWhitespace: true })))
     .pipe(app.gulp.dest(app.paths.build.html))
     .pipe(browserSync.stream());
