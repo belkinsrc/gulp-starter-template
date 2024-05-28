@@ -1,20 +1,16 @@
-import plumber from 'gulp-plumber';
-import notify from 'gulp-notify';
-import newer from 'gulp-newer';
-import flatten from 'gulp-flatten';
-
-const plumberOptions = {
-  errorHandler: notify.onError({
-    title: 'IMAGES',
-    message: 'Error: <%= error.message %>',
-  }),
-};
-
 const svg = () => {
-  return app.gulp.src(app.paths.src.svg)
-    .pipe(plumber(plumberOptions))
-    .pipe(newer(app.paths.build.svg))
-    .pipe(flatten())
+  return app.gulp
+    .src(app.paths.src.svg)
+    .pipe(
+      app.plugins.plumber({
+        errorHandler: app.plugins.notify.onError({
+          title: 'IMAGES',
+          message: 'Error: <%= error.message %>',
+        }),
+      })
+    )
+    .pipe(app.plugins.newer(app.paths.build.svg))
+    .pipe(app.plugins.flatten())
     .pipe(app.gulp.dest(app.paths.build.svg));
 };
 

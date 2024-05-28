@@ -1,30 +1,26 @@
-import plumber from 'gulp-plumber';
-import notify from 'gulp-notify';
-import imagemin from 'gulp-imagemin';
-import newer from 'gulp-newer';
-import flatten from 'gulp-flatten';
-import gulpIf from 'gulp-if';
-
-const plumberOptions = {
-  errorHandler: notify.onError({
-    title: 'IMAGES',
-    message: 'Error: <%= error.message %>',
-  }),
-};
-
-const imageminOptions = {
-  optimizationLevel: 5,
-  progressive: true,
-  interlaced: true,
-};
-
 const images = () => {
   return app.gulp
     .src(app.paths.src.images, { encoding: false })
-    .pipe(plumber(plumberOptions))
-    .pipe(newer(app.paths.build.images))
-    .pipe(gulpIf(!app.isProd, imagemin(imageminOptions)))
-    .pipe(flatten())
+    .pipe(
+      app.plugins.plumber({
+        errorHandler: app.plugins.notify.onError({
+          title: 'IMAGES',
+          message: 'Error: <%= error.message %>',
+        }),
+      })
+    )
+    .pipe(app.plugins.newer(app.paths.build.images))
+    .pipe(
+      app.plugins.gulpIf(
+        !app.isProd,
+        app.plugins.imagemin({
+          optimizationLevel: 5,
+          progressive: true,
+          interlaced: true,
+        })
+      )
+    )
+    .pipe(app.plugins.flatten())
     .pipe(app.gulp.dest(app.paths.build.images));
 };
 
