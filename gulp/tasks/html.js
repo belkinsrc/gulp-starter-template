@@ -4,6 +4,7 @@ import fileInclude from 'gulp-file-include';
 import htmlmin from 'gulp-htmlmin';
 // import rename from 'gulp-rename';
 import replace from 'gulp-replace';
+import typograf from 'gulp-typograf';
 import gulpIf from 'gulp-if';
 
 const fileIncludeOptions = {
@@ -16,6 +17,7 @@ const html = () => {
     .pipe(fileInclude(fileIncludeOptions))
     .pipe(replace(/@image\//g, 'images/'))
     .pipe(gulpIf(app.isProd, htmlmin({ collapseWhitespace: true })))
+    .pipe(typograf({ locale: ['ru', 'en-US'] }))
     .pipe(app.gulp.dest(app.paths.build.html))
     .pipe(browserSync.stream());
 }
