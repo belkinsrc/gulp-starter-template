@@ -30,6 +30,7 @@ import flatten from 'gulp-flatten';
 import newer from 'gulp-newer';
 import replace from 'gulp-replace';
 import gulpIf from 'gulp-if';
+import zip from 'gulp-zip';
 
 const plugins = {
   // Server
@@ -64,6 +65,7 @@ const plugins = {
   newer,
   replace,
   gulpIf,
+  zip,
 };
 
 export { plugins };

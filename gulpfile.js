@@ -8,6 +8,7 @@ import { images } from './gulp/tasks/images.js';
 import { webpImages } from './gulp/tasks/webp.js';
 import { svg } from './gulp/tasks/svg.js';
 import { fonts } from './gulp/tasks/fonts.js';
+import { zipFiles } from './gulp/tasks/zip.js';
 
 import { paths } from './gulp/config/paths.js';
 import { plugins } from './gulp/config/plugins.js';
@@ -41,5 +42,9 @@ const dev = gulp.series(
   gulp.parallel(html, scripts, styles, images, webpImages, svg, fonts),
   watcher
 );
+const zip = zipFiles;
+
+export { dev };
+export { zip };
 
 gulp.task('default', dev);
